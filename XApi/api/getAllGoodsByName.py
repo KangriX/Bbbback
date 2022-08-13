@@ -46,16 +46,17 @@ async def getAllGoodsByName(name: str, token: str = Header(None)):
     tmp = sql_data_selectAll(conn, [(shop_info[0])], sql_2)
 
     result = []
+    cate = []
     for x in tmp:
         temp = {
             "name": x[2],
             "price": x[3],
             "sale": x[4],
             "logo": x[5],
-            "description": x[6],
-            "category": x[7]
+            "description": x[6]
         }
         result.append(temp)
+        cate.append(x[7])
 
     return {
         "name": shop_info[1],
@@ -64,5 +65,6 @@ async def getAllGoodsByName(name: str, token: str = Header(None)):
         "logo": shop_info[8],
         "sale": shop_info[7],
         "threshold": shop_info[-1],
-        "goods": result
+        "goods": result,
+        "categories": cate
     }
