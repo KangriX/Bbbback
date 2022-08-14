@@ -1,26 +1,25 @@
 import pymysql
 from fastapi import APIRouter,Header, Depends, HTTPException
 from pydantic import BaseModel
-from null.authentication import token_is_true
+from op.Token_is_True import token_is_true
 
 router = APIRouter()
-
 @router.get("/getAllShopInfo")
-async def getAllShopInfo(token: str = Header(None)):
-
+async def getAllShopInfo(*, token: str = Header(None)):
     if not token_is_true(token):
         raise HTTPException(
                 status_code=401,
                 detail="Incorrect token",
                 headers={"WWW-Authenticate": "Bearer"},
             )
+
     conn = pymysql.connect(
-    host='124.222.244.117',
-    port=3306,
-    user='zrgj8',
-    password='zrgj8',
-    database='zrgj8',
-    charset='utf8'
+        host='124.222.244.117',
+        port=3306,
+        user='zrgj8',
+        password='zrgj8',
+        database='zrgj8',
+        charset='utf8'
     )
     cursor=conn.cursor()
     sql = 'select name,credit,sale,needytime,distance,logo,thresholdprice,id from shop;'
@@ -29,7 +28,7 @@ async def getAllShopInfo(token: str = Header(None)):
     try:
         cursor.execute(sql)
         res=cursor.fetchall()
-        print("finish")
+        # print("finish")
     except Exception as e:
         print(str(e))
         conn.rollback()

@@ -6,12 +6,11 @@ from fastapi.responses import JSONResponse
 # 让数据以json的格式返回
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
-
+from op.Token_is_True import token_is_true
 router = APIRouter()
-from null.authentication import token_is_true
 
 @router.get('/searchShopByName')
-async def searchShopByNameApi(name:str, token: str = Header(None)):
+async def searchShopByNameApi(name: str, token: str = Header(None)):
     if not token_is_true(token):
         raise HTTPException(
                 status_code=401,

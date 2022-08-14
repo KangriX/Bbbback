@@ -19,12 +19,12 @@ router = APIRouter()
 @router.post("/customerLogin")
 async def loginService(data: Account):
         conn = pymysql.connect(
-        host='124.222.244.117',
-        port=3306,
-        user='zrgj8',
-        password='zrgj8',
-        database='zrgj8',
-        charset='utf8'
+            host='124.222.244.117',
+            port=3306,
+            user='zrgj8',
+            password='zrgj8',
+            database='zrgj8',
+            charset='utf8'
         )
         # print(data.account)
         # print(data.password)
@@ -33,7 +33,7 @@ async def loginService(data: Account):
         acnt = [(data.account)]
         sql = 'select * from customer where account=%s;'
         temp = sql_data_selectOne(conn, acnt, sql)
-        print(temp)
+        # print(temp)
         if temp and data.password == temp[3]:
             return {
                 "code": 1,

@@ -2,7 +2,7 @@ import json
 import time
 import jwt
 import pymysql
-from fastapi import APIRouter, Header, Depends
+from fastapi import APIRouter, Header, Depends, HTTPException
 from pydantic import BaseModel
 from op.Token_is_True import token_is_true
 from op.Token_Decode import token_decode
@@ -12,14 +12,17 @@ class Account(BaseModel):
     pre_pwd: str
     new_pwd: str
 
-class new_acnt:
-    account: str
-    password: str
-
 router = APIRouter()
 
 @router.post("/ChangePassword")
 async def change_Password(data: Account, token: str = Header(None)):
+    # 验证token
+    if not token_is_true(token):
+        raise HTTPException(
+                status_code=401,
+                detail="Incorrect token",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
     
     res = token_decode(token)
     # print(res['data']['password'])
@@ -35,16 +38,17 @@ async def change_Password(data: Account, token: str = Header(None)):
             charset='utf8'
         )
         update_info = [(data.new_pwd,res['data']['account'])]
+        # 修改数据库
         sql_data_change(conn, update_info)
         new_acnt = {
             "account": res['data']['account'],
             "password": data.new_pwd
             }
-        print(new_acnt)
+        # print(new_acnt)
         return {
         "code": "1",
         "msg": "密码修改成功",
-        "Oauth_Token": token_encode(new_acnt)
+        "Oauth_Token": token_encode(new_acnt)  # 返回新的token
         }
     else:
         return {

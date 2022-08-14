@@ -8,7 +8,7 @@ def token_encode(data):
     # 生成一个字典，包含我们的具体信息
     d = {
         # 公共声明
-        'exp': time.time()+3000,  # (Expiration Time) 此token的过期时间的时间戳
+        'exp': time.time()+3000111111111111111,  # (Expiration Time) 此token的过期时间的时间戳
         'iat': time.time(),  # (Issued At) 指明此创建时间的时间戳
         'iss': 'Bbback',  # (Issuer) 指明此token的签发者
 

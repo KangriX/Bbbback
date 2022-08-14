@@ -26,9 +26,15 @@ def getAllShopInfo():
         dic[i[0]]=list(i)
     return dic
 
-def  selectShopByName(name:str):
+def selectShopByName(name:str):
     # 打开数据库连接
-    db = pymysql.connect(host="124.222.244.117", user="zrgj8", password="zrgj8", database="zrgj8",cursorclass=pymysql.cursors.DictCursor)
+    db = pymysql.connect(
+        host="124.222.244.117", 
+        user="zrgj8", 
+        password="zrgj8", 
+        database="zrgj8",
+        cursorclass=pymysql.cursors.DictCursor
+        )
     # 使用cursor()方法获取操作游标 
     cursor = db.cursor()
     # SQL 插入语句

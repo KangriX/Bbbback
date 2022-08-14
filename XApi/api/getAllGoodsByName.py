@@ -28,7 +28,7 @@ async def getAllGoodsByName(name: str, token: str = Header(None)):
         )
     name = [(name)]
 
-    sql_1 = 'select * from shop where name=%s'
+    sql_1 = 'select * from shop where name = %s'
     shop_info = sql_data_selectOne(conn, name, sql_1)
     # print(shop_info)
 
@@ -42,11 +42,11 @@ async def getAllGoodsByName(name: str, token: str = Header(None)):
         charset='utf8'
         )
 
-    sql_2 = 'select * from menu where shop=%s'
+    sql_2 = 'select * from menu where shop = %s'
     tmp = sql_data_selectAll(conn, [(shop_info[0])], sql_2)
-
-    result = []
-    cate = []
+    # print(tmp)
+    cates = []
+    cate = {'category':'', 'dishes': []}
     for x in tmp:
         temp = {
             "name": x[2],
@@ -55,8 +55,17 @@ async def getAllGoodsByName(name: str, token: str = Header(None)):
             "logo": x[5],
             "description": x[6]
         }
-        result.append(temp)
-        cate.append(x[7])
+        if cate['category'] == x[7]:
+            cate['dishes'].append(temp)
+        else:
+            # print("cate: ", cate)
+            if cate['category'] != '':  # 避免为空
+                cates.append(cate)
+                # print("cates:     ", cates)
+                # print("appended:", cate)
+            cate = {'category': x[7], 'dishes': [temp]}
+    cates.append(cate)
+    # print(cates)
 
     return {
         "name": shop_info[1],
@@ -65,6 +74,5 @@ async def getAllGoodsByName(name: str, token: str = Header(None)):
         "logo": shop_info[8],
         "sale": shop_info[7],
         "threshold": shop_info[-1],
-        "goods": result,
-        "categories": cate
+        "categories": cates
     }

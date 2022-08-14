@@ -6,7 +6,7 @@ def token_is_true(token):
     # 尝试解密，解密成功后，秘钥，payload，有效时长校验通过，则会返回payload
     try:
         payload = jwt.decode(token,SECRET_KEY)
-        print(payload)
+        # print(payload)
         return True
     # 否则，则捕获异常，进行提示
     except ExpiredSignatureError as e:

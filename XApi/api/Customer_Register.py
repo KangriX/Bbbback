@@ -33,7 +33,7 @@ async def RegisterService(data: Register_Account):
     cus_info = [(data.account, '', data.password, '', '', '', '', '', data.tele, '', '')]
     sql = 'insert into customer(account,name,pwd,realname,sex,age,card,address,phone,email,cardcode) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'
     res = sql_insert(conn, cus_info, sql)
-    print(res)
+    # print(res)
     if res == 1:
         return {
         "code": "1",
