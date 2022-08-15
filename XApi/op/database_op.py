@@ -1,14 +1,24 @@
 import pymysql
+from pymysql.constants import CLIENT
  
-def sql_insert(conn,data,sql):
+def sql_insert(data,sql):
     #用于插入一条新的用户信息
     # data 格式：data = [(1, 'kachi','123456','tzy','男',16,'5140545045','重庆大学','13251186577','971759126@qq.com','12354'),
     #                   (2, 'kachi3','1234563','yzt','男',17,'12213232','重庆大学','13251186575','971759125@qq.com','12354w')]
+    conn = pymysql.connect(
+        host='124.222.244.117',
+        port=3306,
+        user='zrgj8',
+        password='zrgj8',
+        database='zrgj8',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
+        )
     cursor=conn.cursor()
     try:
-        cursor.executemany(sql, data)
+        cursor.execute(sql, data)
         print("insert finish")
-        return 1
     except Exception as e:
         print(str(e))
         conn.rollback()
@@ -17,6 +27,7 @@ def sql_insert(conn,data,sql):
     # 关闭连接
     cursor.close()
     conn.close()
+    return 1
 
 def sql_insert1(sql):
     #用于插入一条新的用户信息
@@ -28,7 +39,9 @@ def sql_insert1(sql):
         user='zrgj8',
         password='zrgj8',
         database='zrgj8',
-        charset='utf8'
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
         )
     cursor=conn.cursor()
     try:
@@ -44,9 +57,19 @@ def sql_insert1(sql):
     conn.close()
     return 1
 
-def sql_data_change(conn, update_info):
+def sql_data_change(update_info):
     #用于改变用户信息（这里是改密码）
     # update_info 格式：update_info = [('12345','1234')]
+    conn = pymysql.connect(
+        host='124.222.244.117',
+        port=3306,
+        user='zrgj8',
+        password='zrgj8',
+        database='zrgj8',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
+        )
     cursor=conn.cursor()
     sql = "update customer set pwd=%s where account=%s;"
     try:
@@ -69,8 +92,10 @@ def sql_data_change1(sql):
         user='zrgj8',
         password='zrgj8',
         database='zrgj8',
-        charset='utf8'
-    )
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
+        )
     cursor=conn.cursor()
     try:
         cursor.execute(sql)
@@ -84,9 +109,19 @@ def sql_data_change1(sql):
     cursor.close()
     conn.close()
 
-def sql_data_selectOne(conn,account,sql):
+def sql_data_selectOne(account,sql):
     #用于搜索一条新的用户信息
     # account 格式：account = [('1234')]
+    conn = pymysql.connect(
+        host='124.222.244.117',
+        port=3306,
+        user='zrgj8',
+        password='zrgj8',
+        database='zrgj8',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
+        )
     cursor=conn.cursor()
     # sql = 'select * from customer where account=%s;'
     row=None
@@ -109,7 +144,9 @@ def sql_data_selectOne1(sql):
         user='zrgj8',
         password='zrgj8',
         database='zrgj8',
-        charset='utf8'
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
         )
     #用于搜索一条新的用户信息
     # account 格式：account = [('1234')]
@@ -128,9 +165,19 @@ def sql_data_selectOne1(sql):
     conn.close()
     return row
 
-def sql_data_selectAll(conn,account,sql):
+def sql_data_selectAll(account,sql):
     #用于搜索一条新的用户信息
     # account 格式：account = [('1234')]
+    conn = pymysql.connect(
+        host='124.222.244.117',
+        port=3306,
+        user='zrgj8',
+        password='zrgj8',
+        database='zrgj8',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
+        )
     cursor=conn.cursor()
     # sql = 'select * from customer where account=%s;'
     row=None
@@ -153,8 +200,10 @@ def sql_data_selectAll1(sql):
         user='zrgj8',
         password='zrgj8',
         database='zrgj8',
-        charset='utf8'
-    )
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
+        )
     #用于搜索一条新的用户信息
     # account 格式：account = [('1234')]
     cursor=conn.cursor()
@@ -183,7 +232,9 @@ def sql_delete(sql):
         user='zrgj8',
         password='zrgj8',
         database='zrgj8',
-        charset='utf8'
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor,
+        client_flag=CLIENT.MULTI_STATEMENTS
         )
     cursor=conn.cursor()
     try:

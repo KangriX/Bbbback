@@ -28,18 +28,9 @@ async def change_Password(data: Account, token: str = Header(None)):
     # print(res['data']['password'])
     # print(data.pre_pwd)
     if res and res['data']['password'] == data.pre_pwd and data.new_pwd != data.pre_pwd:
-        #修改数据库信息
-        conn = pymysql.connect(
-            host='124.222.244.117',
-            port=3306,
-            user='zrgj8',
-            password='zrgj8',
-            database='zrgj8',
-            charset='utf8'
-        )
         update_info = [(data.new_pwd,res['data']['account'])]
         # 修改数据库
-        sql_data_change(conn, update_info)
+        sql_data_change(update_info)
         new_acnt = {
             "account": res['data']['account'],
             "password": data.new_pwd

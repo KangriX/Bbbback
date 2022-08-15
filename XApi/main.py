@@ -3,14 +3,11 @@ import uvicorn
 # FASTAPI模板
 from fastapi import FastAPI
 # 注册相应的api
-from api import Customer_Login
-from api import Customer_Register
+from api import Customer_api
 from api import Change_Password
-from api import getAllGoodsByName
-from api import getAllShopInfo
-from api import getAllGoodsByName
-from api import Cart_DeleteandAdd
-from api import Cart_getShoppingCartByName
+from api import Shop_api
+from api import Cart_api
+from api import Order_api
 # 配置跨域
 from starlette.middleware.cors import CORSMiddleware
 # 返回json格式的数据
@@ -36,15 +33,12 @@ app.add_middleware(
     allow_headers=["*"])
 
 # 注册api模块
-app.include_router(Customer_Login.router, prefix="/customer")
-app.include_router(Customer_Register.router, prefix="/customer")
+app.include_router(Customer_api.router, prefix="/customer")
 # app.include_router(Token_Check.router, prefix="/customer")
 app.include_router(Change_Password.router, prefix="/customer")
-app.include_router(getAllGoodsByName.router, prefix="/shop")
-app.include_router(getAllShopInfo.router, prefix="/shop")
-app.include_router(getAllGoodsByName.router, prefix="/shop")
-app.include_router(Cart_DeleteandAdd.router, prefix="/buy")
-app.include_router(Cart_getShoppingCartByName.router, prefix="/buy")
+app.include_router(Shop_api.router, prefix="/shop")
+app.include_router(Cart_api.router, prefix="/buy")
+app.include_router(Order_api.router, prefix="/order")
 
 # 配置容器启动相应的实例
 if __name__ == '__main__':
